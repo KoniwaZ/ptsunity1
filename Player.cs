@@ -22,6 +22,7 @@ public class Player : MonoBehaviour
     [SerializeField] GameObject treasure;
 
     Rigidbody2D rb;
+    public Animator animator;
 
     bool isWin;
 
@@ -46,7 +47,7 @@ public class Player : MonoBehaviour
     void Update()
     {
         var x = Input.GetAxis("Horizontal");
-        
+        animator.SetFloat("Speed", MathF.Abs(x));
 
         if(groundCheck.isGround)
         {
@@ -54,7 +55,9 @@ public class Player : MonoBehaviour
             {
                 rb.velocity = new Vector2(rb.transform.position.x,jump);
                 groundCheck.isGround = false;
+                animator.SetBool("IsJumping", true);
             }
+            animator.SetBool("IsJumping", false);
             
         }
         rb.AddForce(new Vector2(x, 0));
