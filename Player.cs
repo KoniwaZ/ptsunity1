@@ -1,4 +1,4 @@
-﻿using System.Collections;
+using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UI;
@@ -22,7 +22,7 @@ public class Player : MonoBehaviour
     [SerializeField] GameObject treasure;
 
     Rigidbody2D rb;
-    public Animator animator;
+    //public Animator animator;
 
     bool isWin;
 
@@ -35,7 +35,7 @@ public class Player : MonoBehaviour
         score = 0;
         life = 3;
         scoreText.text = "Score : " + score;
-        lifeText.text = life +" : Life";
+        lifeText.text = life + " : Life";
         notifText.gameObject.SetActive(false);
         lastText.gameObject.SetActive(false);
         restartButton.gameObject.SetActive(false);
@@ -47,50 +47,50 @@ public class Player : MonoBehaviour
     void Update()
     {
         var x = Input.GetAxis("Horizontal");
-        animator.SetFloat("Speed", MathF.Abs(x));
+        //animator.SetFloat("Speed", MathF.Abs(x));
 
-        if(groundCheck.isGround)
+        if (groundCheck.isGround)
         {
             if (Input.GetKeyDown(KeyCode.Space))
             {
-                rb.velocity = new Vector2(rb.transform.position.x,jump);
+                rb.velocity = new Vector2(rb.transform.position.x, jump);
                 groundCheck.isGround = false;
-                animator.SetBool("IsJumping", true);
+                //animator.SetBool("IsJumping", true);
             }
-            animator.SetBool("IsJumping", false);
-            
+            //animator.SetBool("IsJumping", false);
+
         }
         rb.AddForce(new Vector2(x, 0));
-        rb.velocity = new Vector2(x* speed * Time.deltaTime, rb.velocity.y) ;
+        rb.velocity = new Vector2(x * speed * Time.deltaTime, rb.velocity.y);
     }
 
     private void OnTriggerEnter2D(Collider2D collision)
     {
-        if(collision.gameObject.CompareTag("PickUps"))
+        if (collision.gameObject.CompareTag("PickUps"))
         {
             if (!isWin)
             {
                 score++;
-                scoreText.text = "Score : " + score;
+                //scoreText.text = "Score : " + score;
                 Destroy(collision.gameObject);
             }
         }
-        if(collision.gameObject.CompareTag("Finish"))
+        if (collision.gameObject.CompareTag("Finish"))
         {
-            if(!isWin)
+            if (!isWin)
             {
                 isWin = true;
                 Succes();
             }
         }
-        if(collision.gameObject.CompareTag("Traps"))
+        if (collision.gameObject.CompareTag("Traps"))
         {
-            if(!isWin)
+            if (!isWin)
             {
                 life--;
                 lifeText.text = life + " : Life";
                 //transform.position = new Vector3(-8, -1,1 );
-                if(life <= 0)
+                if (life <= 0)
                 {
                     life = 0;
                     Fail();
@@ -109,7 +109,7 @@ public class Player : MonoBehaviour
         nextstageButton.gameObject.SetActive(true);
         treasure.gameObject.SetActive(false);
     }
-    
+
     private void Fail()
     {
         lastText.text = "Score : " + score;
