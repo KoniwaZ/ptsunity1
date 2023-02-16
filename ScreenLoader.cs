@@ -2,34 +2,24 @@
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.SceneManagement;
-using UnityEngine.UI;
 
 public class ScreenLoader : MonoBehaviour
 {
-    public GameObject loadingScreen;
-    public Slider slider;
-    public void LoadLevel(int sceneIndex)
+    public void LoadStage1()
     {
-        StartCoroutine(LoadAsynchronously(sceneIndex));
+        SceneManager.LoadScene("Stage1");
     }
-
-    IEnumerator LoadAsynchronously (int sceneIndex)
+    public void LoadStage2()
     {
-        AsyncOperation operation = SceneManager.LoadSceneAsync(sceneIndex);
-
-        loadingScreen.SetActive(true);
-
-        while(!operation.isDone)
-        {
-            float progress = Mathf.Clamp01(operation.progress / .9f);
-            slider.value = progress;
-            Debug.Log(progress);
-            yield return null;
-        }
+        SceneManager.LoadScene("Stage2");
     }
-
-    public void ExitGame()
+    public void LoadMainMenu()
+    {
+        SceneManager.LoadScene("MainMenu");
+    }
+    public void Quit()
     {
         Application.Quit();
     }
+       
 }
